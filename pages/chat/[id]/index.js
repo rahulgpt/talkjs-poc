@@ -17,7 +17,8 @@ function createNewBulletin(tokenAddress, chatId) {
   const publicBulletin = new Bulletin();
   const bulletinACL = new moralis.ACL(moralis.User.current());
   //TODO: Only token holders should have read and write access
-  //one solution is to set private read, write access to only the contract owner, the user needs to be manually verified. Or have read, write access given to rogue admin which hides behind a proxy server to verify token holders when they pass the mark i.e. min amoount of tokens held. In other to meet security requirements, chatJS + moralis needs to interfaced with behind a proxy server.
+  //one solution is to set private read, write access to only the contract owner, the user needs to be manually verified.
+  //Alternatively, have read, write access given to rogue admin which hides behind a proxy server to verify token holders when they pass the mark i.e. min amoount of tokens held. In other to meet security requirements, chatJS + moralis needs to interfaced with behind a proxy server.
   //Token holders sign in through us
   //Behind our servers
   //We sign the user in to moralis
@@ -31,7 +32,6 @@ function createNewBulletin(tokenAddress, chatId) {
   publicBulletin.save();
 }
 
-//addAll as participants (there's a 30 pax limit)
 class GroupChat extends Component {
   constructor(props) {
     super(props);
