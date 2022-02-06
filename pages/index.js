@@ -53,9 +53,22 @@ const LogOut = () => {
   );
 };
 
+const Suffix = ({ tokenAddress }) => {
+  const router = useRouter();
+  const onSendToAll = () => {
+    router.push(`/chat/${tokenAddress}`);
+  };
+  return (
+    <Button onClick={onSendToAll} type="dashed">
+      Send to all
+    </Button>
+  );
+};
+
 //add debounce
 const SearchTokens = () => {
   // "0x3883f5e181fccaf8410fa61e12b59bad963fb645";
+  const [tokenAddress, setTokenAddress] = useState("");
   const [tokenHolders, setTokenHolders] = useState([]);
   const router = useRouter();
   const user = moralis.User.current();
@@ -82,10 +95,20 @@ const SearchTokens = () => {
   const onOpenChatWithTokenHolder = (tokenholder) => () => {
     router.push(`/chat/${user.get("ethAddress")}/${tokenholder}`);
   };
+
+  const onSearchValueChange = (e) => {
+    setTokenAddress(e.target.value);
+  };
   return (
     <>
       <LogOut />
-      <Search placeholder="input search text" onSearch={onSearch} enterButton />
+      <Search
+        onChange={onSearchValueChange}
+        suffix={Suffix({ tokenAddress })}
+        placeholder="Insert Token Contract Address"
+        onSearch={onSearch}
+        enterButton
+      />
       <List
         bordered
         dataSource={tokenHolders}
